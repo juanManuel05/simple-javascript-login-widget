@@ -5,7 +5,7 @@ const myConfig = configuration();
 
 myConfig.set({
   forgerock: {
-    clientId: 'WebOAuthClient’',
+    clientId: 'WebOAuthClient',
     redirectUri: window.location.href,
     scope: 'openid profile email address phone',
     serverConfig: {
@@ -36,17 +36,20 @@ const loginButton = document.getElementById('loginButton');
 const signUpButton = document.getElementById('signUpButton');
 
 // // Assign the journey function
-const journeyEvents = journey();
-loginButton.addEventListener('click', () => {
+const journeyEvents = journey({
+  oauth: false,
+  user: false,
+});
+loginButton.addEventListener('click', async () => {
   componentEvents.open();
-  journeyEvents.start({
+  await journeyEvents.start({
     journey: 'Login',
   });
 });
 
-signUpButton.addEventListener('click', () => {
+signUpButton.addEventListener('click', async () => {
   componentEvents.open();
-  journeyEvents.start({
+  await journeyEvents.start({
     journey: 'Registration',
   });
 });
